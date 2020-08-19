@@ -1,0 +1,45 @@
+config:
+  target: 'https://reqres.in/api'
+  phases:
+    - duration: 1
+      arrivalRate: 1
+
+scenarios:
+  - flow:
+  # POST https://reqres.in/api/register - rejestrujemy nowego użytkownika, z odpowiedzi przechowujemy id, 
+    - post:
+        url: "/register"
+        json:
+          email: "eve.holt@reqres.in"
+          password: "pistol"
+        capture:
+          json: "$.id"
+          as: "new_user_id" 
+    - log: "#1 POST - Register User"
+    - log: "Register User id : {{new_user_id}}"    
+
+# POST https://reqres.in/api/login - logujemy się na utworzonego użytkownika, z odpowiedzi przechowujemy token, 
+    - post:
+        url: "/login"
+        json:
+          email: "eve.holt@reqres.in"
+          password: "pistol"
+    - log: "Log in"
+
+# PUT https://reqres.in/api/users/{id} - aktualizujemy dane użytkownika podając id z 1, 
+    - put:
+        url: "/users/1"
+        json:
+           name: "NEWname@@@"
+           job: "NEWjob@@@"
+    - log: "Update User by id"    
+
+# GET https://reqres.in/api/users?page=1 - pobieramy listę użytkowników ze strony 1, z odpowiedzi przechowujemy id wszystkich użytkowników, 
+    - get:
+        url: "/users?page=1"
+    - log: "Get list of users from page 1"
+
+# GET https://reqres.in/api/users/{id} - iterując po zebranych id w 4, pobieramy dane każdego z nich. 
+    - get:
+        url: "/users/1"
+    - log: "Get user by id"    

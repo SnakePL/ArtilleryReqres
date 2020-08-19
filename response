@@ -1,0 +1,1 @@
+DEBUG=http,http:response artillery run /Users/wezu/Desktop/s1.yml
