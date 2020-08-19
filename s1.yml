@@ -45,17 +45,50 @@ scenarios:
 #4 GET https://reqres.in/api/users?page=1 - pobieramy listę użytkowników ze strony 1, z odpowiedzi przechowujemy id wszystkich użytkowników, 
     - get:
         url: "/users?page=1"
-# przechwytuje id wszystkich userow ze strony 1        
+# przechwytuje id wszystkich userow ze strony 1  
+# wiele zmiennych więc dodajemy '-'      
         capture:
-          json: "$.data[0].id"
-          as: "id_of_user1"    
-          json: "$.data[1].id"
-          as: "id_of_user2"        
+         - json: "$.data[0].id"
+           as: "id_of_user1"    
+         - json: "$.data[1].id"
+           as: "id_of_user2"        
+         - json: "$.data[2].id"
+           as: "id_of_user3"    
+         - json: "$.data[3].id"
+           as: "id_of_user4"    
+         - json: "$.data[4].id"
+           as: "id_of_user5"    
+         - json: "$.data[5].id"
+           as: "id_of_user6"                                        
     - log: "#4 Get list of users from page 1"
     - log: "#4 id of fist user: {{id_of_user1}}"    
     - log: "#4 id of second user: {{id_of_user2}}"    
-
+    - log: "#4 id of second user: {{id_of_user3}}"  
+    - log: "#4 id of second user: {{id_of_user4}}"   
+    - log: "#4 id of second user: {{id_of_user5}}"   
+    - log: "#4 id of second user: {{id_of_user6}}"            
 #5 GET https://reqres.in/api/users/{id} - iterując po zebranych id w 4, pobieramy dane każdego z nich. 
+# lecimy ze wszystkimi id z #4
     - get:
-        url: "/users/1"
-    - log: "#5 Get user by id"    
+        url: "/users/{{id_of_user1}}"                
+    - log: "#5 Get user by id {{id_of_user1}}"    
+
+    - get:
+        url: "/users/{{id_of_user2}}"                
+    - log: "#5 Get user by id {{id_of_user2}}"        
+
+    - get:
+        url: "/users/{{id_of_user3}}"                
+    - log: "#5 Get user by id {{id_of_user3}}"    
+
+    - get:
+        url: "/users/{{id_of_user4}}"                
+    - log: "#5 Get user by id {{id_of_user4}}"   
+
+    - get:
+        url: "/users/{{id_of_user5}}"                
+    - log: "#5 Get user by id {{id_of_user5}}"    
+
+    - get:
+        url: "/users/{{id_of_user6}}"                
+    - log: "#5 Get user by id {{id_of_user6}}"        
