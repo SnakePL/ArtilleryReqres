@@ -93,9 +93,4 @@ scenarios:
         url: "/users/{{id_of_user6}}"                
     - log: "#5 Get user by id {{id_of_user6}}"        
 # zastąpienie 6x get z pkt 5 jednym loopem:
-  - loop: 
-      - get:
-           url: "/users/{{ $loopElement }}"  
-    over:
-      - 1
-      - 2
+# loop w pliku loop, tutaj z jakiegos powodu nie działał (spacje)

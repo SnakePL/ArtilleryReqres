@@ -1,0 +1,14 @@
+config:
+  target: 'https://reqres.in/api'
+  phases:
+    - duration: 1
+      arrivalRate: 1
+
+scenarios:
+  - flow:
+     - loop: 
+         - get:
+            url: "/users/{{ $loopElement }}"  
+       over:
+        - 1
+        - 2
