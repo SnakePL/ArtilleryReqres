@@ -12,9 +12,11 @@ scenarios:
         json:
           email: "eve.holt@reqres.in"
           password: "pistol"
+  # capture - pobieranie danych i przypisanie do zmiennych        
         capture:
           json: "$.id"
-          as: "new_user_id" 
+          as: "new_user_id"
+  # log - wyświetla string w terminalu         
     - log: "#1 POST - Register User"
     - log: "Register User id : {{new_user_id}}"    
 
