@@ -1,1 +1,4 @@
+# path to reposytory
+DEBUG=http,http:response artillery run /Users/wezu/Artilleryreqres/s1.yml
+# path to desktop
 DEBUG=http,http:response artillery run /Users/wezu/Desktop/s1.yml
