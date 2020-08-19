@@ -6,42 +6,56 @@ config:
 
 scenarios:
   - flow:
-  # POST https://reqres.in/api/register - rejestrujemy nowego użytkownika, z odpowiedzi przechowujemy id, 
+  #1 POST https://reqres.in/api/register - rejestrujemy nowego użytkownika, z odpowiedzi przechowujemy id, 
     - post:
         url: "/register"
         json:
           email: "eve.holt@reqres.in"
           password: "pistol"
-  # capture - pobieranie danych i przypisanie do zmiennych        
+  # capture - pobieranie danych i przypisanie do zmiennych, przechowujemy id       
         capture:
           json: "$.id"
           as: "new_user_id"
   # log - wyświetla string w terminalu         
     - log: "#1 POST - Register User"
-    - log: "Register User id : {{new_user_id}}"    
+    - log: "#1 Register User id: {{new_user_id}}"    
 
-# POST https://reqres.in/api/login - logujemy się na utworzonego użytkownika, z odpowiedzi przechowujemy token, 
+#2 POST https://reqres.in/api/login - logujemy się na utworzonego użytkownika, z odpowiedzi przechowujemy token, 
     - post:
         url: "/login"
         json:
           email: "eve.holt@reqres.in"
           password: "pistol"
-    - log: "Log in"
+# przechowuje numer tokena
+        capture:
+          json: "$.token"
+          as: "new_user_token"  
+    - log: "#2 Log in"
+    - log: "#2 Loged user token: {{new_user_token}}"    
 
-# PUT https://reqres.in/api/users/{id} - aktualizujemy dane użytkownika podając id z 1, 
+#3 PUT https://reqres.in/api/users/{id} - aktualizujemy dane użytkownika podając id z 1, 
     - put:
-        url: "/users/1"
+    # podaje id z pierwszego get
+        url: "/users/{{new_user_id}}"
         json:
            name: "NEWname@@@"
            job: "NEWjob@@@"
-    - log: "Update User by id"    
+    - log: "#3 Update User by id"    
 
-# GET https://reqres.in/api/users?page=1 - pobieramy listę użytkowników ze strony 1, z odpowiedzi przechowujemy id wszystkich użytkowników, 
+#4 GET https://reqres.in/api/users?page=1 - pobieramy listę użytkowników ze strony 1, z odpowiedzi przechowujemy id wszystkich użytkowników, 
     - get:
         url: "/users?page=1"
-    - log: "Get list of users from page 1"
+# przechwytuje id wszystkich userow ze strony 1        
+        capture:
+          json: "$.data[0].id"
+          as: "id_of_user1"    
+          json: "$.data[1].id"
+          as: "id_of_user2"        
+    - log: "#4 Get list of users from page 1"
+    - log: "#4 id of fist user: {{id_of_user1}}"    
+    - log: "#4 id of second user: {{id_of_user2}}"    
 
-# GET https://reqres.in/api/users/{id} - iterując po zebranych id w 4, pobieramy dane każdego z nich. 
+#5 GET https://reqres.in/api/users/{id} - iterując po zebranych id w 4, pobieramy dane każdego z nich. 
     - get:
         url: "/users/1"
-    - log: "Get user by id"    
+    - log: "#5 Get user by id"    
