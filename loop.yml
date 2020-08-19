@@ -12,3 +12,8 @@ scenarios:
        over:
         - 1
         - 2
+        - 3
+        - 4
+        - 5
+        - 6
+     - log: "#5 Get user by id"    
