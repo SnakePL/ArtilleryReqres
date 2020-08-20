@@ -92,17 +92,17 @@ scenarios:
     - get:
         url: "/users/{{id_of_user6}}"                
     - log: "#5 Get user by id {{id_of_user6}}"        
-# zastąpienie 6x get z pkt 5 jednym loopem:
+# zastąpienie 6x get z pkt. 5 jednym loopem:
 # test loop w pliku testloop
      
     - loop: 
         - get:
            url: "/users/{{ $loopElement }}"  
       over:
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-    - log: "#5 Get user by id"         
+      - "{{id_of_user1}}"
+      - "{{id_of_user2}}"
+      - "{{id_of_user3}}"
+      - "{{id_of_user4}}"
+      - "{{id_of_user5}}"
+      - "{{id_of_user6}}"
+    - log: "#5 Get user by ids from step 4. Users ids are: {{id_of_user1}},{{id_of_user2}},{{id_of_user3}},{{id_of_user4}},{{id_of_user5}},{{id_of_user6}}"         
