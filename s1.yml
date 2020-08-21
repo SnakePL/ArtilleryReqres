@@ -62,6 +62,10 @@ scenarios:
 
         capture:
          #when you want to store many variable hyphens'-' are necessary.
+         #number of users on the list
+        - json: "$.data.length"
+           as: "numberOfUsers"
+
          - json: "$.data[0].id"
            as: "id_of_user1"    
          - json: "$.data[1].id"
