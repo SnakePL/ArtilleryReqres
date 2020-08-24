@@ -10,8 +10,14 @@ config:
     - duration: 1
       arrivalRate: 1
 #we can define more then one load phase      
-    - duration: 10
-      arrivalRate: 1
+    #- duration: 10
+    #  arrivalRate: 1
+  #to load a custom code into the artillery, we use the word 'processor', and also provide a file name.
+  processor: "getUsersIDs.js"
+  #Through the word 'variables' we can save the variable in which we store the data returned from our above file.
+  variables:
+      arrayOfUsersIDs: 
+          - []
 #now we have to prepare a test scenario
 scenarios:
 #we define one possible scenario for every new virtual user to pick from, which consists of two post requests, 
@@ -60,13 +66,18 @@ scenarios:
            name: "NEWname@@@"
            job: "NEWjob@@@"    
     - log: "#3 PUT - The data of the user who has id={{new_user_id}} has been updated."    
+    - log: "   New name is NEWname@@@"
+    - log: "   New job is NEWjob@@@"    
     - log: " "
     - log: " "
 
 #4 GET https://reqres.in/api/users?page=1 - we download a list of users from page 1, from the answers we store the id of all users
     - get:
         url: "/users?page=1"
-
+        #With the word 'after response' we are able to say what function is to be performed after the response from api.
+        #In our case it is the "saveIDsFromResponse" function from our .js file.
+        afterResponse: "saveIDsFromResponse"
+        #The entire capture block below is no longer needed because we save everything through our new feature. 
         capture:
          #when you want to store many variable hyphens'-' are necessary.
          #number of users on the list
@@ -101,14 +112,16 @@ scenarios:
         - get:
            #a variable that will take all values written in 'over' section
            url: "/users/{{ $loopElement }}"  
-      over:
+      over: arrayOfUsersIDs 
+      #Thanks to the table above, we no longer have to replace each id separately. As it was in 'over' below.
+      #over:
       #the variables have to be transmitted in quotation marks.
-      - "{{id_of_user1}}"
-      - "{{id_of_user2}}"
-      - "{{id_of_user3}}"
-      - "{{id_of_user4}}"
-      - "{{id_of_user5}}"
-      - "{{id_of_user6}}"
+      #- "{{id_of_user1}}"
+      #- "{{id_of_user2}}"
+      #- "{{id_of_user3}}"
+      #- "{{id_of_user4}}"
+      #- "{{id_of_user5}}"
+      #- "{{id_of_user6}}"
 
     - log: "#5 Get user by ids from step 4. Users ids are: {{id_of_user1}},{{id_of_user2}},{{id_of_user3}},{{id_of_user4}},{{id_of_user5}},{{id_of_user6}}"         
     - log: " "
