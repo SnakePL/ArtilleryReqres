@@ -3,12 +3,19 @@
 #remember that all the spaces in the code are very important.
 #let's start by setting up the configuration section.
 config:
+#we specify that we are testing a service running on https://reqres.in/api which will be talking to over HTTP
   target: 'https://reqres.in/api'
   phases:
+#We define one load phase, which will last x seconds with x new virtual users (arriving every second (on average).
     - duration: 1
+      arrivalRate: 1
+#we can define more then one load phase      
+    - duration: 10
       arrivalRate: 1
 #now we have to prepare a test scenario
 scenarios:
+#we define one possible scenario for every new virtual user to pick from, which consists of two post requests, 
+#one put request and two get requests.
   - flow:
 #1 POST https://reqres.in/api/register - we register a new user, from the answers we store the id
     - post:
