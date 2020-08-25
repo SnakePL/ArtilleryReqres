@@ -97,7 +97,7 @@ scenarios:
          - json: "$.data[5].id"
            as: "id_of_user6"                                              
     - log: "#4 GET - list of users from page 1"
-    - log: "   id of fist   user: {{id_of_user1}}" 
+    - log: "   id of first   user: {{id_of_user1}}" 
     - log: "   id of second user: {{id_of_user2}}"    
     - log: "   id of third  user: {{id_of_user3}}"    
     - log: "   id of fourth user: {{id_of_user4}}"  
@@ -127,7 +127,7 @@ scenarios:
     - log: " "
     
 ## THE END
-## execute by 'rtillery run /Users/wezu/Artilleryreqres/s1.yml'
+## execute by 'artillery run /Users/wezu/Artilleryreqres/s1.yml'
 ## if you want to see the answer from api execute by 'DEBUG=http,http:response artillery run /Users/wezu/Artilleryreqres/s1.yml'
 
 
